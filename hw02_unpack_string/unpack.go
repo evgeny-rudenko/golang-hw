@@ -14,25 +14,23 @@ func Unpack(str string) (string, error) {
 	var prev rune
 
 	for _, r := range str {
-		if unicode.IsDigit(r) {
+		switch {
+		case unicode.IsDigit(r):
 			if prev == 0 {
 				return "", ErrInvalidString
 			}
-
 			count, _ := strconv.Atoi(string(r))
 			result.WriteString(strings.Repeat(string(prev), count))
 			prev = 0
-		} else if prev != 0 {
+		case prev != 0:
 			result.WriteRune(prev)
 			prev = r
-		} else {
+		default:
 			prev = r
 		}
 	}
-
 	if prev != 0 {
 		result.WriteRune(prev)
 	}
-
 	return result.String(), nil
 }
