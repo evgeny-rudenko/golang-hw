@@ -5,39 +5,52 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
-
-	"golang.org/x/example/stringutil"
 )
 
 var ErrInvalidString = errors.New("invalid string")
 
-/*
-	func Unpacks(_ string) (string, error) {
-		// Place your code here.
-		return "", nil
-	}
-*/
-func Unpack(input string) (string, error) {
+func Unpack(str string) (string, error) {
 	var result strings.Builder
-	var count int
-	input = stringutil.Reverse(input)
-	for i, r := range input {
+	var prev rune
+	//isEscaping := false
+
+	for _, r := range str {
+		/*
+			//todo: доработать
+			if r == '\\' && !isEscaping {
+					isEscaping = true
+					continue
+				}
+
+				if isEscaping {
+					if unicode.IsDigit(r) || r == '\\' {
+						result.WriteRune(r)
+						isEscaping = false
+						continue
+					} else {
+						return "", ErrInvalidString
+					}
+				}
+		*/
 		if unicode.IsDigit(r) {
-			if i == 0 || !unicode.IsLetter(rune(input[i-1])) {
+			if prev == 0 {
 				return "", ErrInvalidString
 			}
 
-			digit, _ := strconv.Atoi(string(r))
-			count = count*10 + digit
+			count, _ := strconv.Atoi(string(r))
+			result.WriteString(strings.Repeat(string(prev), count))
+			prev = 0
+		} else if prev != 0 {
+			result.WriteRune(prev)
+			prev = r
 		} else {
-			if count > 0 {
-				result.WriteString(strings.Repeat(string(r), count))
-				count = 0
-			} else {
-				result.WriteRune(r)
-			}
+			prev = r
 		}
 	}
 
-	return stringutil.Reverse(result.String()), nil
+	if prev != 0 {
+		result.WriteRune(prev)
+	}
+
+	return result.String(), nil
 }
