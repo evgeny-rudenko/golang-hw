@@ -12,7 +12,6 @@ var ErrInvalidString = errors.New("invalid string")
 func Unpack(str string) (string, error) {
 	var result strings.Builder
 	var prev rune
-
 	for _, r := range str {
 		switch {
 		case unicode.IsDigit(r):
