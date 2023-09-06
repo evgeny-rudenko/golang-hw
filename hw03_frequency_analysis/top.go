@@ -29,7 +29,7 @@ func Top10(text string) []string {
 		freqList = append(freqList, wordFrequency{word, count})
 	}
 
-	sort.SliceStable(freqList, func(i, j int) bool {
+	sort.Slice(freqList, func(i, j int) bool {
 		if freqList[i].frequency == freqList[j].frequency {
 			return freqList[i].word < freqList[j].word
 		}
