@@ -7,7 +7,7 @@ import (
 )
 
 func Top10(text string) []string {
-	regExpr := regexp.MustCompile(`[-a-zA-Zа-яА-Я]+`)
+	regExpr := regexp.MustCompile(`[-a-zA-Zа-яА-Я,]+`)
 	if text == "" {
 		return make([]string, 0)
 	}
@@ -28,6 +28,7 @@ func Top10(text string) []string {
 	for word, count := range wordCount {
 		freqList = append(freqList, wordFrequency{word, count})
 	}
+
 	sort.SliceStable(freqList, func(i, j int) bool {
 		if freqList[i].frequency == freqList[j].frequency {
 			return freqList[i].word < freqList[j].word
