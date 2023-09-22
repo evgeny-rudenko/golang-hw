@@ -49,8 +49,55 @@ func TestCache(t *testing.T) {
 		require.Nil(t, val)
 	})
 
-	t.Run("purge logic", func(t *testing.T) {
-		// Write me
+	t.Run("Превышение размера кеша", func(t *testing.T) {
+		c := NewCache(3)
+
+		// заполняем кеш
+		inCache := c.Set("aaa", 1)
+		require.False(t, inCache)
+		inCache = c.Set("bbb", 2)
+		require.False(t, inCache)
+		inCache = c.Set("ccc", 3)
+		require.False(t, inCache)
+
+		// получаем значение и меняем порядок элементов
+		val, ok := c.Get("bbb")
+		require.True(t, ok)
+		require.Equal(t, 2, val)
+
+		val, ok = c.Get("ccc")
+		require.True(t, ok)
+		require.Equal(t, 3, val)
+
+		// добавлем еще один элемент для превышения емкости кэша
+		// должно вытолкнуть из кэша значение ааа как находящийся в конце
+		inCache = c.Set("ddd", 4)
+		require.False(t, inCache)
+
+		// проверяем есть ли в кэше удаленный элемент
+		val, ok = c.Get("aaa")
+		require.False(t, ok)
+		require.Nil(t, val)
+
+		// сохранился ли элемент ddd в кеше
+		val, ok = c.Get("ddd")
+		require.True(t, ok)
+		require.Equal(t, 4, val)
+	})
+
+	// очистка кэша
+	t.Run("Clear cache", func(t *testing.T) {
+		c := NewCache(3)
+		c.Set("aaa", 1)
+		c.Set("bbb", 2)
+		c.Set("ccc", 3)
+		c.Clear()
+		_, ok := c.Get("aaa")
+		require.False(t, ok)
+		_, ok = c.Get("bbb")
+		require.False(t, ok)
+		_, ok = c.Get("ccc")
+		require.False(t, ok)
 	})
 }
 
