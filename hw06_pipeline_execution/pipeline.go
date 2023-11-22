@@ -8,7 +8,28 @@ type (
 
 type Stage func(in In) (out Out)
 
+func worker(in Bi, done In, out Out) {
+	for {
+		select {
+		case <-done:
+			close(in)
+			return
+		case v, ok := <-out:
+			if ok {
+				in <- v
+			} else {
+				close(in)
+				return
+			}
+		}
+	}
+}
+
 func ExecutePipeline(in In, done In, stages ...Stage) Out {
-	// Place your code here.
-	return nil
+	for _, stage := range stages {
+		chanNext := make(Bi)
+		go worker(chanNext, done, in)
+		in = stage(chanNext)
+	}
+	return in
 }
