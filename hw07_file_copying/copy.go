@@ -16,8 +16,10 @@ var (
 
 const (
 	pbSlleepTime = 100 // пауза для прогрес бара
-	chunkSize    = 100
+
 )
+
+var chunkSize int64 = 1024
 
 // для тестов убираем задержку при копировании и вывод прогресс бара.
 var itsATest = true
@@ -52,6 +54,14 @@ func Copy(fromPath, toPath string, offset, limit int64) error { //nolint:gocogni
 	if limit > fileInfo.Size() || limit == 0 {
 		limit = fileInfo.Size()
 	}
+	// выбираем размер чанка - если файл меньше чем 2 мб, то максимальный размер чанка - 1/5 размера файла
+	//если файл больше 2 мб, то максимальный размер чанка - 1 мб
+	if limit > 1024*1024*2 {
+		chunkSize = 1024 * 1024
+	} else {
+		chunkSize = limit/5 + 1
+	}
+
 	var bar *pb.ProgressBar
 	buff := make([]byte, chunkSize)
 	total := int64(0)
