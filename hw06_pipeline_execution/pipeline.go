@@ -15,11 +15,11 @@ func worker(in Bi, done In, out Out) {
 			close(in)
 			return
 		case v, ok := <-out:
-			if !ok {
+			if ok {
+				in <- v
+			} else {
 				close(in)
 				return
-			} else {
-				in <- v
 			}
 		}
 	}
