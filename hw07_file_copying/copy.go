@@ -22,7 +22,7 @@ const (
 // для тестов убираем задержку при копировании и вывод прогресс бара.
 var itsATest = true
 
-func Copy(fromPath, toPath string, offset, limit int64) error {
+func Copy(fromPath, toPath string, offset, limit int64) error { //nolint:gocognit
 	fromFile, err := os.Open(fromPath)
 	if err != nil {
 		return err
