@@ -64,7 +64,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error { //nolint:gocogni
 
 	for {
 		n, err := fromFile.Read(buff)
-		if err != nil && err != io.EOF {
+		if err != nil && !errors.Is(err, io.EOF) {
 			return err
 		}
 		if n == 0 || (limit > 0 && total >= limit) {
