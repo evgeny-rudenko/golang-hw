@@ -19,8 +19,8 @@ const (
 	chunkSize    = 100
 )
 
-// для тестов убираем задержку при копировании и вывод прогресс бара
-var ItsATest = true
+// для тестов убираем задержку при копировании и вывод прогресс бара.
+var itsATest = true
 
 func Copy(fromPath, toPath string, offset, limit int64) error {
 	fromFile, err := os.Open(fromPath)
@@ -56,7 +56,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	buff := make([]byte, chunkSize)
 	total := int64(0)
 
-	if !ItsATest {
+	if !itsATest {
 		bar = pb.Full.Start64(100) // максимальное число в процентах
 		bar.SetRefreshRate(time.Duration(100) * time.Millisecond)
 		defer bar.Finish()
@@ -75,7 +75,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 			n = int(limit - total)
 		}
 
-		if !ItsATest {
+		if !itsATest {
 			time.Sleep(pbSlleepTime * time.Millisecond)
 			bar.SetCurrent(int64(float64(total) / float64(limit) * 100))
 		}
@@ -86,7 +86,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 		total += int64(n)
 	}
-	if !ItsATest {
+	if !itsATest {
 		bar.SetCurrent(100)
 	}
 	return nil

@@ -75,7 +75,7 @@ func TestCopy(t *testing.T) {
 	}
 }
 
-// сравнение файлов - считаем хэш исходного и получившегося файла
+// Сравнение файлов - считаем хэш исходного и получившегося файла.
 func compare(file1, file2 string) bool {
 	hash1, err := getFileMD5(file1)
 	if err != nil {
