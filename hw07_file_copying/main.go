@@ -1,4 +1,4 @@
-package main
+package hw07filecopying
 
 import (
 	"flag"
