@@ -1,9 +1,11 @@
-package hw07filecopying
+package main
 
 import (
 	"flag"
 	"fmt"
 	"os"
+
+	cpkg "github.com/evgeny-rudenko/hw07_file_copying/copypkg"
 )
 
 var (
@@ -20,7 +22,7 @@ func init() {
 
 func main() {
 	flag.Parse()
-	err := Copy(from, to, offset, limit)
+	err := cpkg.Copy(from, to, offset, limit)
 	if err != nil {
 		fmt.Println("error occurred while copying file:", err)
 		os.Exit(1)

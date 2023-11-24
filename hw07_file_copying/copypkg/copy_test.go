@@ -12,8 +12,8 @@ import (
 )
 
 func TestOffsetExceeds(t *testing.T) {
-	to := "testdata/out_offset0_limit0.txt"
-	err := Copy("testdata/input.txt", to, 123456, 10)
+	to := "../testdata/out_offset0_limit0.txt"
+	err := Copy("../testdata/input.txt", to, 123456, 10)
 	require.EqualError(t, err, ErrOffsetExceedsFileSize.Error())
 }
 
@@ -25,38 +25,38 @@ func TestCopy(t *testing.T) {
 		limit        int64
 	}{
 		{
-			inputFile:    "testdata/input.txt",
-			expectedFile: "testdata/out_offset0_limit0.txt",
+			inputFile:    "../testdata/input.txt",
+			expectedFile: "../testdata/out_offset0_limit0.txt",
 			offset:       0,
 			limit:        0,
 		},
 		{
-			inputFile:    "testdata/input.txt",
-			expectedFile: "testdata/out_offset0_limit10.txt",
+			inputFile:    "../testdata/input.txt",
+			expectedFile: "../testdata/out_offset0_limit10.txt",
 			offset:       0,
 			limit:        10,
 		},
 		{
-			inputFile:    "testdata/input.txt",
-			expectedFile: "testdata/out_offset0_limit1000.txt",
+			inputFile:    "../testdata/input.txt",
+			expectedFile: "../testdata/out_offset0_limit1000.txt",
 			offset:       0,
 			limit:        1000,
 		},
 		{
-			inputFile:    "testdata/input.txt",
-			expectedFile: "testdata/out_offset0_limit10000.txt",
+			inputFile:    "../testdata/input.txt",
+			expectedFile: "../testdata/out_offset0_limit10000.txt",
 			offset:       0,
 			limit:        10000,
 		},
 		{
-			inputFile:    "testdata/input.txt",
-			expectedFile: "testdata/out_offset100_limit1000.txt",
+			inputFile:    "../testdata/input.txt",
+			expectedFile: "../testdata/out_offset100_limit1000.txt",
 			offset:       100,
 			limit:        1000,
 		},
 		{
-			inputFile:    "testdata/input.txt",
-			expectedFile: "testdata/out_offset6000_limit1000.txt",
+			inputFile:    "../testdata/input.txt",
+			expectedFile: "../testdata/out_offset6000_limit1000.txt",
 			offset:       6000,
 			limit:        1000,
 		},
