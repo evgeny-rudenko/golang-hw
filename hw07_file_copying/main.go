@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	cpkg "github.com/evgeny-rudenko/hw07_file_copying/copypkg"
+	cpkg "github.com/evgeny-rudenko/golang-hw/hw07_file_copying/copypkg"
 )
 
 var (

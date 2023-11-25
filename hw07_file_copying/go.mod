@@ -1,4 +1,4 @@
-module github.com/evgeny-rudenko/hw07_file_copying
+module github.com/evgeny-rudenko/golang-hw/hw07_file_copying
 
 go 1.19
 
