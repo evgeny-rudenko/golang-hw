@@ -2,6 +2,10 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"os"
+
+	cpkg "github.com/evgeny-rudenko/golang-hw/hw07_file_copying/copypkg"
 )
 
 var (
@@ -18,5 +22,9 @@ func init() {
 
 func main() {
 	flag.Parse()
-	// Place your code here.
+	err := cpkg.Copy(from, to, offset, limit)
+	if err != nil {
+		fmt.Println("error occurred while copying file:", err)
+		os.Exit(1)
+	}
 }
